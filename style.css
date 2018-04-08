@@ -1,0 +1,49 @@
+#content-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: center;
+}
+
+#sounds-wrapper {    
+    display: flex;
+    justify-content: space-between;    
+    width: 100%;
+}
+@media only screen and (max-width: 1000px) {
+    #sounds-wrapper { 
+        flex-direction: column;
+        height: 100%;
+    }
+}
+
+button {
+    background-color: #33a2aa;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    margin: 0;
+    padding: 1.5rem;
+    transition: all 0.5s;
+    transition: background-color 1s;
+}
+
+button:focus, button:hover {
+    background-color: #66b9bf;
+}
+
+button.playing {
+    background-color: #e37222;
+    transform: scale(1.2);
+}
+
+button kbd {
+    font-size: 2rem;
+}
+
+button span {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+}

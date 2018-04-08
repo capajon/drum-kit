@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drum Kit</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="content-wrapper">
+  <div id="sounds-wrapper"><p>Loading...</p></div>
+</div>
+
+<script>
+
+  const soundsBaseLocation = 'sounds'
+  const sounds = [
+    {
+      shortcut: 'A',
+      key: 65,
+      description: 'Clap',
+      filename: 'clap.wav'
+    },
+    {
+      shortcut: 'S',
+      key: 83,
+      description: 'Hihat',
+      filename: 'hihat.wav'
+    },
+    {
+      shortcut: 'D',
+      key: 68,
+      description: 'Kick',
+      filename: 'kick.wav'
+    },
+    {
+      shortcut: 'F',
+      key: 70,
+      description: 'Openhat',
+      filename: 'openhat.wav'
+    },
+    {
+      shortcut: 'G',
+      key: 71,
+      description: 'Boom',
+      filename: 'boom.wav'
+    },
+    {
+      shortcut: 'H',
+      key: 72,
+      description: 'Ride',
+      filename: 'ride.wav'
+    },
+    {
+      shortcut: 'J',
+      key: 74,
+      description: 'Snare',
+      filename: 'snare.wav'
+    },
+    {
+      shortcut: 'K',
+      key: 75,
+      description: 'Tom',
+      filename: 'tom.wav'
+    },
+    {
+      shortcut: 'L',
+      key: 76,
+      description: 'Tink',
+      filename: 'tink.wav'
+    }
+  ];
+
+  function getSoundsHtml(sounds, soundsBaseLocation) {
+    return sounds.map(sound => {
+      return `<button data-key="${sound.key}">
+        <kbd>${sound.shortcut}</kbd>
+        <span>${sound.description}</span>
+        <audio src="${soundsBaseLocation}/${sound.filename}"></audio>
+      </button>`;
+    }).join('');    
+  }
+
+  function tryPlayAudio(buttonEl) {
+    if (!buttonEl) {
+      return;
+    }
+
+    const audioEl = buttonEl.querySelector('audio');
+    if (!audioEl) {
+      return;
+    }
+
+    buttonEl.classList.add('playing');
+    setTimeout(() => { 
+      buttonEl.classList.remove('playing');
+    },300)
+
+    audioEl.currentTime = 0;
+    audioEl.play();    
+  }
+
+  const soundsWrapperEl = document.querySelector('#sounds-wrapper');
+  soundsWrapperEl.innerHTML = getSoundsHtml(sounds, soundsBaseLocation);
+
+  document.addEventListener('keydown', e => {
+    tryPlayAudio(document.querySelector(`button[data-key="${e.keyCode}"]`), e.keyCode);
+  }); 
+
+  for(buttonEl of document.querySelectorAll('button')) {
+    buttonEl.addEventListener('click', e => {
+      tryPlayAudio(e.target);
+    }, true);
+  }
+</script>
+
+
+</body>
+</html>
